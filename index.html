@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funções Matemáticas CSS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .demo-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .demo-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+
+    .visual-demo {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calc-demo {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .min-demo {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .max-demo {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .clamp-demo {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .control-group {
+      margin: 15px 0;
+    }
+
+    .control-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.3);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .value-display {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-left: 10px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    .code-block .property {
+      color: #66d9ef;
+    }
+
+    .code-block .value {
+      color: #a6e22e;
+    }
+
+    .code-block .number {
+      color: #ae81ff;
+    }
+
+    .responsive-text {
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 10px;
+      transition: font-size 0.3s ease;
+    }
+
+    .comparison-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .comparison-box {
+      flex: 1;
+      min-width: 150px;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+    }
+
+    .info-badge {
+      display: inline-block;
+      background: rgba(255, 215, 0, 0.3);
+      padding: 3px 10px;
+      border-radius: 15px;
+      font-size: 0.85em;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+    }
+
+    .viewport-indicator {
+      text-align: center;
+      font-size: 1.2em;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧮 Funções Matemáticas CSS</h1>
+    <p class="subtitle">Deixe o CSS "pensar" e criar layouts inteligentes</p>
+
+    <!-- CALC() -->
+    <div class="section">
+      <h2 class="section-title">➕ calc() - Aritmética Básica</h2>
+      
+      <div class="grid">
+        <div class="demo-box">
+          <div class="demo-title">Largura Dinâmica</div>
+          <div class="control-group">
+            <label>Container: <span class="value-display" id="containerWidth">100%</span></label>
+            <label>Subtração: <span class="value-display" id="subtractValue">40px</span></label>
+            <input type="range" id="subtractSlider" min="0" max="100" value="40">
+          </div>
+          <div class="visual-demo">
+            <div class="calc-demo" id="calcBox">
+              calc(100% - 40px)
+            </div>
+          </div>
+          <div class="code-block">
+<span class="property">width:</span> <span class="value">calc(<span class="number">100%</span> - <span class="number" id="codeSubtract">40px</span>)</span>;
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-title">Operações Múltiplas</div>
+          <div class="control-group">
+            <label>Multiplicador: <span class="value-display" id="multiplyValue">2</span></label>
+            <input type="range" id="multiplySlider" min="1" max="4" step="0.5" value="2">
+          </div>
+          <div class="visual-demo">
+            <div class="calc-demo" id="multiplyBox" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              25% × 2 = 50%
+            </div>
+          </div>
+          <div class="code-block">
+<span class="property">width:</span> <span class="value">calc(<span class="number">25%</span> * <span class="number" id="codeMultiply">2</span>)</span>;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIN() -->
+    <div class="section">
+      <h2 class="section-title">🔽 min() - Escolhe o Menor Valor</h2>
+      
+      <div class="demo-box">
+        <div class="demo-title">Largura Limitada (nunca passa do máximo)</div>
+        <div class="viewport-indicator">
+          Largura do container: <span id="minContainerWidth">800px</span>
+        </div>
+        <div class="control-group">
+          <label>Limite máximo: <span class="value-display" id="minLimitValue">400px</span></label>
+          <input type="range" id="minLimitSlider" min="200" max="600" value="400" step="50">
+        </div>
+        <div class="visual-demo">
+          <div class="min-demo" id="minBox">
+            min(80%, 400px)
+          </div>
+        </div>
+        <div class="comparison-container">
+          <div class="comparison-box" style="background: rgba(79, 172, 254, 0.5);">
+            80% = <span id="percentValue">640px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(0, 242, 254, 0.5);">
+            Limite = <span id="limitValue">400px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(79, 172, 254, 0.8);">
+            Resultado = <span id="minResult">400px</span>
+          </div>
+        </div>
+        <div class="code-block">
+<span class="property">width:</span> <span class="value">min(<span class="number">80%</span>, <span class="number" id="codeMinLimit">400px</span>)</span>;
+        </div>
+        <div class="info-badge">✨ Perfeito para limitar imagens e conteúdos</div>
+      </div>
+    </div>
+
+    <!-- MAX() -->
+    <div class="section">
+      <h2 class="section-title">🔼 max() - Escolhe o Maior Valor</h2>
+      
+      <div class="demo-box">
+        <div class="demo-title">Largura Mínima Garantida</div>
+        <div class="viewport-indicator">
+          Largura do container: <span id="maxContainerWidth">800px</span>
+        </div>
+        <div class="control-group">
+          <label>Mínimo garantido: <span class="value-display" id="maxMinValue">300px</span></label>
+          <input type="range" id="maxMinSlider" min="100" max="500" value="300" step="50">
+        </div>
+        <div class="visual-demo">
+          <div class="max-demo" id="maxBox">
+            max(300px, 30%)
+          </div>
+        </div>
+        <div class="comparison-container">
+          <div class="comparison-box" style="background: rgba(67, 233, 123, 0.5);">
+            Mínimo = <span id="maxMinDisplay">300px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(56, 249, 215, 0.5);">
+            30% = <span id="maxPercentValue">240px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(67, 233, 123, 0.8);">
+            Resultado = <span id="maxResult">300px</span>
+          </div>
+        </div>
+        <div class="code-block">
+<span class="property">width:</span> <span class="value">max(<span class="number" id="codeMaxMin">300px</span>, <span class="number">30%</span>)</span>;
+        </div>
+        <div class="info-badge">✨ Garante que nunca fique pequeno demais</div>
+      </div>
+    </div>
+
+    <!-- CLAMP() -->
+    <div class="section">
+      <h2 class="section-title">🎚 clamp() - Mínimo, Ideal, Máximo</h2>
+      
+      <div class="demo-box">
+        <div class="demo-title">Tipografia Fluida (o queridinho!)</div>
+        <div class="viewport-indicator">
+          Largura da viewport: <span id="viewportWidth">1200px</span>
+        </div>
+        <div class="control-group">
+          <label>Tamanho mínimo: <span class="value-display" id="clampMinValue">1.5rem</span></label>
+          <input type="range" id="clampMinSlider" min="1" max="2" step="0.1" value="1.5">
+        </div>
+        <div class="control-group">
+          <label>Viewport unit: <span class="value-display" id="clampVwValue">4vw</span></label>
+          <input type="range" id="clampVwSlider" min="2" max="8" step="0.5" value="4">
+        </div>
+        <div class="control-group">
+          <label>Tamanho máximo: <span class="value-display" id="clampMaxValue">3rem</span></label>
+          <input type="range" id="clampMaxSlider" min="2.5" max="5" step="0.1" value="3">
+        </div>
+        <div class="visual-demo">
+          <div class="responsive-text" id="clampText">
+            Texto Responsivo
+          </div>
+        </div>
+        <div class="comparison-container">
+          <div class="comparison-box" style="background: rgba(250, 112, 154, 0.6);">
+            Mín: <span id="clampMinDisplay">24px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(254, 225, 64, 0.6);">
+            Ideal: <span id="clampIdealDisplay">48px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(250, 112, 154, 0.6);">
+            Máx: <span id="clampMaxDisplay">48px</span>
+          </div>
+          <div class="comparison-box" style="background: rgba(250, 112, 154, 0.9);">
+            Atual: <span id="clampCurrentDisplay">48px</span>
+          </div>
+        </div>
+        <div class="code-block">
+<span class="property">font-size:</span> <span class="value">clamp(<span class="number" id="codeClampMin">1.5rem</span>, <span class="number" id="codeClampVw">4vw</span>, <span class="number" id="codeClampMax">3rem</span>)</span>;
+        </div>
+        <div class="info-badge">✨ Perfeito para títulos e textos responsivos sem media queries!</div>
+      </div>
+    </div>
+
+    <!-- Advanced Functions -->
+    <div class="section">
+      <h2 class="section-title">🚀 Funções Avançadas</h2>
+      <div class="grid">
+        <div class="demo-box">
+          <div class="demo-title">Trigonometria</div>
+          <div class="control-group">
+            <label>Ângulo: <span class="value-display" id="trigAngle">45deg</span></label>
+            <input type="range" id="trigSlider" min="0" max="360" value="45">
+          </div>
+          <div class="visual-demo">
+            <div class="calc-demo" id="trigBox" style="width: 100px; height: 100px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+              ⭕
+            </div>
+          </div>
+          <div class="code-block">
+<span class="property">transform:</span> <span class="value">rotate(<span class="number" id="codeTrigAngle">45deg</span>)</span>;
+<span class="property">/* sin:</span> <span class="number" id="sinValue">0.71</span> <span class="property">*/</span>
+<span class="property">/* cos:</span> <span class="number" id="cosValue">0.71</span> <span class="property">*/</span>
+          </div>
+          <div class="info-badge">⚠️ Suporte limitado em navegadores</div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-title">Exponencial & Raiz</div>
+          <div class="control-group">
+            <label>Base: <span class="value-display" id="powBase">2</span></label>
+            <input type="range" id="powBaseSlider" min="2" max="5" value="2">
+            <label>Expoente: <span class="value-display" id="powExp">3</span></label>
+            <input type="range" id="powExpSlider" min="2" max="6" value="3">
+          </div>
+          <div class="visual-demo" style="flex-direction: column; gap: 15px;">
+            <div class="calc-demo" id="powBox" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333;">
+              pow(2, 3) = 8
+            </div>
+            <div class="calc-demo" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333;">
+              sqrt(64) = 8
+            </div>
+          </div>
+          <div class="code-block">
+<span class="property">width:</span> <span class="value">calc(pow(<span class="number" id="codePowBase">2</span>, <span class="number" id="codePowExp">3</span>) * 1px)</span>;
+<span class="property">height:</span> <span class="value">calc(sqrt(<span class="number">64</span>) * 1px)</span>;
+          </div>
+          <div class="info-badge">⚠️ Suporte muito limitado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CALC() Demo
+    const subtractSlider = document.getElementById('subtractSlider');
+    const calcBox = document.getElementById('calcBox');
+    
+    subtractSlider.addEventListener('input', (e) => {
+      const value = e.target.value;
+      document.getElementById('subtractValue').textContent = value + 'px';
+      document.getElementById('codeSubtract').textContent = value + 'px';
+      calcBox.style.width = `calc(100% - ${value}px)`;
+      calcBox.textContent = `calc(100% - ${value}px)`;
+    });
+
+    // Multiply Demo
+    const multiplySlider = document.getElementById('multiplySlider');
+    const multiplyBox = document.getElementById('multiplyBox');
+    
+    multiplySlider.addEventListener('input', (e) => {
+      const value = e.target.value;
+      document.getElementById('multiplyValue').textContent = value;
+      document.getElementById('codeMultiply').textContent = value;
+      multiplyBox.style.width = `calc(25% * ${value})`;
+      const result = 25 * value;
+      multiplyBox.textContent = `25% × ${value} = ${result}%`;
+    });
+
+    // MIN() Demo
+    const minLimitSlider = document.getElementById('minLimitSlider');
+    const minBox = document.getElementById('minBox');
+    const containerWidth = 800;
+    
+    function updateMinDemo() {
+      const limit = parseInt(minLimitSlider.value);
+      const percent80 = containerWidth * 0.8;
+      const result = Math.min(percent80, limit);
+      
+      document.getElementById('minLimitValue').textContent = limit + 'px';
+      document.getElementById('codeMinLimit').textContent = limit + 'px';
+      document.getElementById('percentValue').textContent = percent80 + 'px';
+      document.getElementById('limitValue').textContent = limit + 'px';
+      document.getElementById('minResult').textContent = result + 'px';
+      document.getElementById('minContainerWidth').textContent = containerWidth + 'px';
+      
+      minBox.style.width = result + 'px';
+      minBox.textContent = `min(80%, ${limit}px) = ${result}px`;
+    }
+    
+    minLimitSlider.addEventListener('input', updateMinDemo);
+    updateMinDemo();
+
+    // MAX() Demo
+    const maxMinSlider = document.getElementById('maxMinSlider');
+    const maxBox = document.getElementById('maxBox');
+    
+    function updateMaxDemo() {
+      const minValue = parseInt(maxMinSlider.value);
+      const percent30 = containerWidth * 0.3;
+      const result = Math.max(minValue, percent30);
+      
+      document.getElementById('maxMinValue').textContent = minValue + 'px';
+      document.getElementById('codeMaxMin').textContent = minValue + 'px';
+      document.getElementById('maxMinDisplay').textContent = minValue + 'px';
+      document.getElementById('maxPercentValue').textContent = percent30 + 'px';
+      document.getElementById('maxResult').textContent = result + 'px';
+      document.getElementById('maxContainerWidth').textContent = containerWidth + 'px';
+      
+      maxBox.style.width = result + 'px';
+      maxBox.textContent = `max(${minValue}px, 30%) = ${result}px`;
+    }
+    
+    maxMinSlider.addEventListener('input', updateMaxDemo);
+    updateMaxDemo();
+
+    // CLAMP() Demo
+    const clampMinSlider = document.getElementById('clampMinSlider');
+    const clampVwSlider = document.getElementById('clampVwSlider');
+    const clampMaxSlider = document.getElementById('clampMaxSlider');
+    const clampText = document.getElementById('clampText');
+    
+    function updateClampDemo() {
+      const minRem = parseFloat(clampMinSlider.value);
+      const vw = parseFloat(clampVwSlider.value);
+      const maxRem = parseFloat(clampMaxSlider.value);
+      
+      const viewportW = window.innerWidth;
+      const minPx = minRem * 16;
+      const idealPx = (vw / 100) * viewportW;
+      const maxPx = maxRem * 16;
+      const currentPx = Math.max(minPx, Math.min(idealPx, maxPx));
+      
+      document.getElementById('clampMinValue').textContent = minRem + 'rem';
+      document.getElementById('clampVwValue').textContent = vw + 'vw';
+      document.getElementById('clampMaxValue').textContent = maxRem + 'rem';
+      document.getElementById('viewportWidth').textContent = viewportW + 'px';
+      
+      document.getElementById('clampMinDisplay').textContent = minPx.toFixed(0) + 'px';
+      document.getElementById('clampIdealDisplay').textContent = idealPx.toFixed(0) + 'px';
+      document.getElementById('clampMaxDisplay').textContent = maxPx.toFixed(0) + 'px';
+      document.getElementById('clampCurrentDisplay').textContent = currentPx.toFixed(0) + 'px';
+      
+      document.getElementById('codeClampMin').textContent = minRem + 'rem';
+      document.getElementById('codeClampVw').textContent = vw + 'vw';
+      document.getElementById('codeClampMax').textContent = maxRem + 'rem';
+      
+      clampText.style.fontSize = `clamp(${minRem}rem, ${vw}vw, ${maxRem}rem)`;
+    }
+    
+    clampMinSlider.addEventListener('input', updateClampDemo);
+    clampVwSlider.addEventListener('input', updateClampDemo);
+    clampMaxSlider.addEventListener('input', updateClampDemo);
+    window.addEventListener('resize', updateClampDemo);
+    updateClampDemo();
+
+    // Trigonometry Demo
+    const trigSlider = document.getElementById('trigSlider');
+    const trigBox = document.getElementById('trigBox');
+    
+    trigSlider.addEventListener('input', (e) => {
+      const angle = e.target.value;
+      const radians = (angle * Math.PI) / 180;
+      const sinValue = Math.sin(radians).toFixed(2);
+      const cosValue = Math.cos(radians).toFixed(2);
+      
+      document.getElementById('trigAngle').textContent = angle + 'deg';
+      document.getElementById('codeTrigAngle').textContent = angle + 'deg';
+      document.getElementById('sinValue').textContent = sinValue;
+      document.getElementById('cosValue').textContent = cosValue;
+      
+      trigBox.style.transform = `rotate(${angle}deg)`;
+    });
+
+    // Power Demo
+    const powBaseSlider = document.getElementById('powBaseSlider');
+    const powExpSlider = document.getElementById('powExpSlider');
+    const powBox = document.getElementById('powBox');
+    
+    function updatePowDemo() {
+      const base = parseInt(powBaseSlider.value);
+      const exp = parseInt(powExpSlider.value);
+      const result = Math.pow(base, exp);
+      
+      document.getElementById('powBase').textContent = base;
+      document.getElementById('powExp').textContent = exp;
+      document.getElementById('codePowBase').textContent = base;
+      document.getElementById('codePowExp').textContent = exp;
+      
+      powBox.textContent = `pow(${base}, ${exp}) = ${result}`;
+      powBox.style.width = Math.min(result * 10, 300) + 'px';
+    }
+    
+    powBaseSlider.addEventListener('input', updatePowDemo);
+    powExpSlider.addEventListener('input', updatePowDemo);
+    updatePowDemo();
+  </script>
+</body>
+</html>
